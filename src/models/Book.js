@@ -6,4 +6,5 @@ const BookSchema = new mongoose.Schema({
   available: { type: Boolean, default: true },
 });
 
-module.exports = mongoose.model("Book", BookSchema);
+// Check if the model already exists, and use it if so
+module.exports = mongoose.models.Book || mongoose.model("Book", BookSchema);
