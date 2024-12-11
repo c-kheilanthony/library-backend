@@ -40,3 +40,7 @@ app.use("/api/books", require("./routes/books"));
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Users API
+const usersRouter = require("./routes/users");
+app.use("/api/users", usersRouter);
