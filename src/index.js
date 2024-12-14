@@ -19,7 +19,14 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-// Book Model
+// Routes
+app.get("/", (req, res) => {
+  res.send("Library Backend is Running");
+});
+
+// ================================
+// Book Model (Legacy, can be removed or retained)
+// ================================
 const BookSchema = new mongoose.Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
@@ -28,19 +35,24 @@ const BookSchema = new mongoose.Schema({
 
 const Book = mongoose.model("Book", BookSchema);
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("Library Backend is Running");
-});
+// ================================
+// Inventory Routes (New)
+// ================================
+const inventoryRoutes = require("./routes/inventoryRoutes"); // NEW: Import the inventory routes
+app.use("/api/inventory", inventoryRoutes); // NEW: Use the inventory routes
 
-// Books API
+// ================================
+// Books API (Optional for Legacy Code)
+// ================================
 app.use("/api/books", require("./routes/books"));
+
+// ================================
+// Users API
+// ================================
+const usersRouter = require("./routes/users");
+app.use("/api/users", usersRouter);
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// Users API
-const usersRouter = require("./routes/users");
-app.use("/api/users", usersRouter);
