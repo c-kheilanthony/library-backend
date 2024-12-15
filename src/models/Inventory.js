@@ -14,6 +14,7 @@ const InventorySchema = new mongoose.Schema({
   datePublished: { type: Date, required: true },
   isbn: { type: String, required: true },
   copyIdentifier: { type: String, required: true },
+  coverImage: { type: String }, // URL to the book cover image
 });
 
 module.exports = mongoose.model("Inventory", InventorySchema);

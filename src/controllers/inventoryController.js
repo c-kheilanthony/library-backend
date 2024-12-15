@@ -15,14 +15,26 @@ exports.getInventory = async (req, res) => {
 
 // Add a new inventory item
 exports.addInventoryItem = async (req, res) => {
-  console.log("addInventoryItem function called with body:", req.body);
   try {
-    const newItem = new Inventory(req.body);
-    const savedItem = await newItem.save();
-    console.log("Inventory item added successfully:", savedItem);
-    res.status(201).json(savedItem);
-  } catch (err) {
-    console.error("Error adding inventory item:", err);
-    res.status(500).json({ error: "Failed to add inventory item" });
+    console.log("Request file:", req.file); // Log file details for debugging
+
+    const { category, title, author, datePublished, isbn, copyIdentifier } =
+      req.body;
+
+    const newBook = new Inventory({
+      category: category.split(","), // Assuming categories are comma-separated
+      title,
+      author,
+      datePublished,
+      isbn,
+      copyIdentifier,
+      coverImage: req.file.path, // Cloudinary URL for the uploaded image
+    });
+
+    await newBook.save();
+    res.status(201).json({ message: "Book added successfully", book: newBook });
+  } catch (error) {
+    console.error("Error adding inventory item:", error);
+    res.status(500).json({ error: "Failed to add book" });
   }
 };
