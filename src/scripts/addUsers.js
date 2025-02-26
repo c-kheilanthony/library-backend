@@ -16,9 +16,7 @@ async function addUsers() {
     const hashedPassword = await bcrypt.hash("password123", 10);
 
     const users = [
-      { username: "admin", password: hashedPassword, role: "Admin" },
-      { username: "librarian", password: hashedPassword, role: "Librarian" },
-      { username: "student", password: hashedPassword, role: "Student" },
+      { username: "admin2", password: hashedPassword, role: "Admin" },
     ];
 
     await User.insertMany(users);

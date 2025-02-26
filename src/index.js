@@ -29,12 +29,13 @@ app.get("/", (req, res) => {
 const inventoryRoutes = require("./routes/inventoryRoutes");
 app.use("/api/inventory", inventoryRoutes);
 
-// Books API (Optional, for legacy)
-app.use("/api/books", require("./routes/books"));
-
 // Users API
 const usersRouter = require("./routes/users");
 app.use("/api/users", usersRouter);
+
+// Requests API
+const requestsRouter = require("./routes/requests");
+app.use("/api/requests", requestsRouter);
 
 // Start the server
 app.listen(PORT, () => {
