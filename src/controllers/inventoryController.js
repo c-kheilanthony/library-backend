@@ -4,7 +4,6 @@ exports.getInventory = async (req, res) => {
   console.log("getInventory function called");
   try {
     const inventory = await Inventory.find();
-    console.log("Inventory fetched from MongoDB:", inventory);
     res.json(inventory);
   } catch (err) {
     console.error("Error fetching inventory data:", err);

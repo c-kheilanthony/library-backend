@@ -30,8 +30,13 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role }, SECRET, {
       expiresIn: "1h",
     });
+    console.log("Sending response:", {
+      token,
+      role: user.role,
+      username: user.username,
+    });
     console.log("Login successful, token generated"); // Log successful login
-    res.json({ token, role: user.role });
+    res.json({ token, role: user.role, username: user.username });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Error during login", error });
