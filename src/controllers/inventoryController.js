@@ -36,28 +36,39 @@ exports.addInventoryItem = async (req, res) => {
 // Update an inventory item
 exports.updateInventoryItem = async (req, res) => {
   try {
-    console.log("Updating inventory item:", req.body);
+    console.log("🔄 PUT Request Received for ID:", req.params.id);
+    console.log("📦 Received Body:", req.body);
+    console.log("📷 Received File:", req.file);
+
     const { id } = req.params;
     const updatedFields = { ...req.body };
     // Check if a new cover image is uploaded
     if (req.file) {
+      console.log("✅ New Cover Image Received:", req.file.path);
       updatedFields.coverImage = req.file.path;
+    } else {
+      console.log("⚠️ No new image uploaded.");
     }
+
     const updatedBook = await Inventory.findByIdAndUpdate(id, updatedFields, {
       new: true, // Return the updated document
       runValidators: true, // Ensure validation is run
     });
+
     if (!updatedBook) {
       console.log("Book not found with id:", id);
       return res.status(404).json({ error: "Book not found" });
     }
+
     console.log("Book updated:", updatedBook);
     res
       .status(200)
       .json({ message: "Book updated successfully", book: updatedBook });
   } catch (error) {
     console.error("Error updating inventory item:", error);
-    res.status(500).json({ error: "Failed to update book" });
+    res
+      .status(500)
+      .json({ error: "Failed to update book", details: error.message });
   }
 };
 // Delete an inventory item

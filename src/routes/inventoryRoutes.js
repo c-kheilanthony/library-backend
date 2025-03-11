@@ -13,12 +13,16 @@ router.get("/", (req, res) => {
 // POST /api/inventory/add - Add a new inventory item
 router.post("/add", upload.single("coverImage"), (req, res) => {
   console.log("POST /api/inventory/add hit with body:", req.body);
+  console.log("PUT request received. File:", req.file, "Body:", req.body);
   inventoryController.addInventoryItem(req, res);
 });
 
 // PUT /api/inventory/:id - Update an inventory item
-router.put("/:id", upload.single("coverImage"), (req, res) => {
+router.put("/:id", upload.single("coverImage"), async (req, res) => {
   console.log("PUT /api/inventory/:id hit with id:", req.params.id);
+  console.log("PUT request received. File:", req.file);
+  console.log("PUT request received. Body:", req.body);
+
   inventoryController.updateInventoryItem(req, res);
 });
 

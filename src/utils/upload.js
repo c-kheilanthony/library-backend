@@ -13,4 +13,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
+upload.single("coverImage");
+console.log("Multer upload middleware initialized");
+
 module.exports = upload;
