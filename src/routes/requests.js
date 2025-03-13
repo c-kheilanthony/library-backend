@@ -60,4 +60,26 @@ router.get("/:studentId", async (req, res) => {
   }
 });
 
+// Delete a request by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("Delete request attempt:", id);
+
+    // Find and delete the request
+    const deletedRequest = await Request.findByIdAndDelete(id);
+
+    if (!deletedRequest) {
+      console.log("Request not found:", id);
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    console.log("Request deleted successfully:", deletedRequest);
+    res.json({ message: "Request deleted successfully", deletedRequest });
+  } catch (error) {
+    console.error("Error deleting request:", error);
+    res.status(500).json({ message: "Internal server error", error });
+  }
+});
+
 module.exports = router;
