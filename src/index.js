@@ -37,6 +37,10 @@ app.use("/api/users", usersRouter);
 const requestsRouter = require("./routes/requests");
 app.use("/api/requests", requestsRouter);
 
+// Borrowed API
+const borrowedRouter = require("./routes/borrowedBooks");
+app.use("/api/borrowed", borrowedRouter);
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
